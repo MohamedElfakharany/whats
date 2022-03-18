@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>123248465965-binltit078k97o41hp2hca0ddgn6p28o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.123248465965-binltit078k97o41hp2hca0ddgn6p28o</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>123248465965-c78h478a03pi2tt057tqe5of0g3bmr1g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAFRNF0FG9FN1Mug5w03eO391bNlvZsHH8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>123248465965</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.whats</string>
+	<key>PROJECT_ID</key>
+	<string>whats-ac42c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>whats-ac42c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:123248465965:ios:c7cc6f842cf9b6d53800a4</string>
+</dict>
+</plist>
