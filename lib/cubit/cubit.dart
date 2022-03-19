@@ -2,25 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats/cubit/states.dart';
+import 'package:whats/modules/auth/register/cubit/states.dart';
 
-class WhatsCubit extends Cubit<WhatsStates> {
-  WhatsCubit() : super(WhatsInitialState());
+class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
+  WhatsRegisterCubit() : super(WhatsRegisterInitialState());
 
-  static WhatsCubit get(context) => BlocProvider.of(context);
-
-  Future login({
-    @required String email,
-    @required String password,
-    String lang = 'en',
-    String token,
-  }) async {
-    try {
-      emit(WhatsLoginLoadingState());
-    } catch (e) {
-      emit(WhatsLoginErrorState(e.toString()));
-    }
-  }
+  static WhatsRegisterCubit get(context) => BlocProvider.of(context);
 
   Future register({
     @required String name,
@@ -29,8 +16,8 @@ class WhatsCubit extends Cubit<WhatsStates> {
     @required String password,
   }) async {
     try {
-      var response = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
+      emit(WhatsRegisterLoadingState());
+      var response = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -41,7 +28,7 @@ class WhatsCubit extends Cubit<WhatsStates> {
         print(response.user.uid);
       }
       emit(WhatsRegisterSuccessState());
-    }catch(error){
+    } catch (error) {
       if (kDebugMode) {
         print(error.toString());
       }
@@ -56,6 +43,6 @@ class WhatsCubit extends Cubit<WhatsStates> {
     isPassword = !isPassword;
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    emit(WhatsChangePasswordVisibilityState());
+    emit(WhatsRegisterchangePasswordVisibilityState());
   }
 }

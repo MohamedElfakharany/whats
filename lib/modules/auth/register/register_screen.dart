@@ -2,7 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whats/cubit/cubit.dart';
-import 'package:whats/cubit/states.dart';
+import 'package:whats/modules/auth/register/cubit/states.dart';
 import 'package:whats/shared/components/components.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -19,8 +19,8 @@ class RegisterScreen extends StatelessWidget {
     var phoneController = TextEditingController();
 
     return BlocProvider(
-      create: (BuildContext context) => WhatsCubit(),
-      child: BlocConsumer<WhatsCubit, WhatsStates>(
+      create: (BuildContext context) => WhatsRegisterCubit(),
+      child: BlocConsumer<WhatsRegisterCubit, WhatsRegisterStates>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
@@ -68,7 +68,6 @@ class RegisterScreen extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please Enter Your Name';
                           }
-                          return '';
                         },
                       ),
                       const SizedBox(
@@ -86,7 +85,6 @@ class RegisterScreen extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please Enter Your Phone';
                           }
-                          return '';
                         },
                       ),
                       const SizedBox(
@@ -104,7 +102,6 @@ class RegisterScreen extends StatelessWidget {
                           if (value.isEmpty || !value.contains('@')) {
                             return 'Please Enter Your Email Address';
                           }
-                          return '';
                         },
                       ),
                       const SizedBox(
@@ -113,22 +110,22 @@ class RegisterScreen extends StatelessWidget {
                       TextFormField(
                         controller: passwordController,
                         keyboardType: TextInputType.visiblePassword,
-                        obscureText: WhatsCubit.get(context).isPassword,
+                        obscureText: WhatsRegisterCubit.get(context).isPassword,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.lock_outlined),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              WhatsCubit.get(context).suffix,
+                              WhatsRegisterCubit.get(context).suffix,
                             ),
                             onPressed: () {
-                              WhatsCubit.get(context).changePasswordVisibility();
+                              WhatsRegisterCubit.get(context).changePasswordVisibility();
                             },
                           ),
                           labelText: 'Password',
                           border: const OutlineInputBorder(),
                         ),
                         onFieldSubmitted: (value){
-                          WhatsCubit.get(context).register(
+                          WhatsRegisterCubit.get(context).register(
                             name: nameController.text,
                             phone: phoneController.text,
                             email: emailController.text,
@@ -139,7 +136,6 @@ class RegisterScreen extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Password is Empty';
                           }
-                          return '';
                         },
                       ),
                       const SizedBox(
@@ -150,7 +146,7 @@ class RegisterScreen extends StatelessWidget {
                         builder: (context) => defaultButton(
                           function: () {
                             if (formKey.currentState.validate()) {
-                              WhatsCubit.get(context).register(
+                              WhatsRegisterCubit.get(context).register(
                                 name: nameController.text,
                                 phone: phoneController.text,
                                 email: emailController.text,

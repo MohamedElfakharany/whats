@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:whats/bloc_observer.dart';
-import 'package:whats/modules/auth/login_screen.dart';
+import 'package:whats/modules/auth/login/login_screen.dart';
 import 'package:whats/shared/styles/themes.dart';
 // import 'firebase_options.dart';
 
