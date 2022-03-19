@@ -7,6 +7,7 @@ import 'package:whats/cubit/states.dart';
 import 'package:whats/modules/auth/login/cubit/cubit.dart';
 import 'package:whats/modules/auth/login/cubit/states.dart';
 import 'package:whats/modules/auth/register/register_screen.dart';
+import 'package:whats/modules/social_layout.dart';
 import 'package:whats/shared/components/components.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,6 +28,10 @@ class LoginScreen extends StatelessWidget {
               msg: state.error.toString(),
               state: ToastState.ERROR,
             );
+          }
+          if (state is WhatsLoginSuccessState)
+          {
+            navigateAndFinish(context, const SocialLayout());
           }
         },
         builder: (context, state) {

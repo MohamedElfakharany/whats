@@ -1,8 +1,10 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats/cubit/cubit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:whats/modules/auth/register/cubit/cubit.dart';
 import 'package:whats/modules/auth/register/cubit/states.dart';
+import 'package:whats/modules/social_layout.dart';
 import 'package:whats/shared/components/components.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -21,7 +23,17 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => WhatsRegisterCubit(),
       child: BlocConsumer<WhatsRegisterCubit, WhatsRegisterStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is WhatsCreateUserSuccessState){
+            navigateAndFinish(context, const SocialLayout());
+          }
+          if (state is WhatsCreateUserErrorState){
+            showToast(msg: state.error, state: ToastState.ERROR);
+          }
+          if (state is WhatsRegisterErrorState){
+            showToast(msg: state.error, state: ToastState.ERROR);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -100,7 +112,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         validator: (String value) {
                           if (value.isEmpty || !value.contains('@')) {
-                            return 'Please Enter Your Email Address';
+                            return 'Please Enter Valide Email Address';
                           }
                         },
                       ),
