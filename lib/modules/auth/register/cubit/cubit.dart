@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whats/cubit/cubit.dart';
+import 'package:whats/cubit/states.dart';
 import 'package:whats/models/user_model.dart';
 import 'package:whats/modules/auth/register/cubit/states.dart';
 
@@ -29,6 +31,7 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
         phone: phone,
         name: name,
       );
+
     } catch (error) {
       if (kDebugMode) {
         print(error.toString());
@@ -48,6 +51,7 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
       phone: phone,
       email: email,
       uId: uId,
+      isEmailVerified: false,
     );
 
     try {
@@ -55,7 +59,7 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
           .collection('users')
           .doc(uId)
           .set(model.toMap());
-      emit(WhatsRegisterSuccessState());
+      emit(WhatsRegisterSuccessState(uId));
       emit(WhatsCreateUserSuccessState());
     } catch (error) {
       WhatsCreateUserErrorState(error.toString());

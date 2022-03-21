@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,9 +7,9 @@ import 'package:whats/modules/auth/register/cubit/cubit.dart';
 import 'package:whats/modules/auth/register/cubit/states.dart';
 import 'package:whats/modules/social_layout.dart';
 import 'package:whats/shared/components/components.dart';
+import 'package:whats/shared/network/local/cache_helper.dart';
 
 class RegisterScreen extends StatelessWidget {
-
   RegisterScreen({Key key}) : super(key: key);
 
   var formKey = GlobalKey<FormState>();
@@ -24,13 +25,29 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => WhatsRegisterCubit(),
       child: BlocConsumer<WhatsRegisterCubit, WhatsRegisterStates>(
         listener: (context, state) {
-          if (state is WhatsCreateUserSuccessState){
-            navigateAndFinish(context, const SocialLayout());
+          if (state is WhatsRegisterErrorState) {
+            showToast(
+              msg: state.error.toString(),
+              state: ToastState.ERROR,
+            );
           }
-          if (state is WhatsCreateUserErrorState){
+          if (state is WhatsRegisterSuccessState) {
+            try {
+              CacheHelper.saveData(key: 'uId', value: state.uId);
+              navigateAndFinish(
+                context,
+                const SocialLayout(),
+              );
+            } catch (error) {
+              if (kDebugMode) {
+                print(error.toString());
+              }
+            }
+          }
+          if (state is WhatsCreateUserErrorState) {
             showToast(msg: state.error, state: ToastState.ERROR);
           }
-          if (state is WhatsRegisterErrorState){
+          if (state is WhatsRegisterErrorState) {
             showToast(msg: state.error, state: ToastState.ERROR);
           }
         },
@@ -51,9 +68,9 @@ class RegisterScreen extends StatelessWidget {
                       Text(
                         'REGISTER',
                         style: Theme.of(context).textTheme.headline3.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       const SizedBox(
                         height: 20.0,
@@ -61,9 +78,9 @@ class RegisterScreen extends StatelessWidget {
                       Text(
                         'Login now to connect with friends',
                         style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: Colors.grey,
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                       const SizedBox(
                         height: 30.0,
@@ -130,13 +147,14 @@ class RegisterScreen extends StatelessWidget {
                               WhatsRegisterCubit.get(context).suffix,
                             ),
                             onPressed: () {
-                              WhatsRegisterCubit.get(context).changePasswordVisibility();
+                              WhatsRegisterCubit.get(context)
+                                  .changePasswordVisibility();
                             },
                           ),
                           labelText: 'Password',
                           border: const OutlineInputBorder(),
                         ),
-                        onFieldSubmitted: (value){
+                        onFieldSubmitted: (value) {
                           WhatsRegisterCubit.get(context).register(
                             name: nameController.text,
                             phone: phoneController.text,

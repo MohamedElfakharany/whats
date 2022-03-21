@@ -9,6 +9,8 @@ import 'package:whats/modules/auth/login/cubit/states.dart';
 import 'package:whats/modules/auth/register/register_screen.dart';
 import 'package:whats/modules/social_layout.dart';
 import 'package:whats/shared/components/components.dart';
+import 'package:whats/shared/network/local/cache_helper.dart';
+import 'package:whats/shared/network/local/constants.dart';
 
 class LoginScreen extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -29,9 +31,18 @@ class LoginScreen extends StatelessWidget {
               state: ToastState.ERROR,
             );
           }
-          if (state is WhatsLoginSuccessState)
-          {
-            navigateAndFinish(context, const SocialLayout());
+          if (state is WhatsLoginSuccessState) {
+            try {
+              CacheHelper.saveData(key: 'uId', value: state.uId);
+              navigateAndFinish(
+                context,
+                const SocialLayout(),
+              );
+            } catch (error) {
+              if (kDebugMode) {
+                print(error.toString());
+              }
+            }
           }
         },
         builder: (context, state) {
@@ -97,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               WhatsLoginCubit.get(context)
-                                  .WhatsLoginchangePasswordVisibility();
+                                  .WhatsLoginChangePasswordVisibility();
                             },
                           ),
                           labelText: 'Password',

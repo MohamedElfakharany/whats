@@ -51,11 +51,15 @@ Widget defaultButton({
 Widget defaultTextButton({
   @required Function function,
   @required String data,
+  Color color2 = defaultColor,
 }) {
   return TextButton(
     onPressed: function,
     child: Text(
       data.toUpperCase(),
+      style: TextStyle(
+        color: color2,
+      ),
     ),
   );
 }

@@ -12,8 +12,6 @@ class WhatsLoginCubit extends Cubit<WhatsLoginStates> {
   Future login({
     @required String email,
     @required String password,
-    String lang = 'en',
-    String token,
   }) async {
     try {
       emit(WhatsLoginLoadingState());
@@ -21,11 +19,17 @@ class WhatsLoginCubit extends Cubit<WhatsLoginStates> {
         email: email,
         password: password,
       );
-      print(response.user.email);
-      print(response.user.uid);
-      emit(WhatsLoginSuccessState());
+      if (kDebugMode) {
+        print(response.user.email);
+      }
+      if (kDebugMode) {
+        print(response.user.uid);
+      }
+      emit(WhatsLoginSuccessState(response.user.uid));
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       emit(WhatsLoginErrorState(e.toString()));
     }
   }
@@ -33,7 +37,7 @@ class WhatsLoginCubit extends Cubit<WhatsLoginStates> {
   IconData suffix = Icons.visibility_off_outlined;
   bool isPassword = true;
 
-  void WhatsLoginchangePasswordVisibility() {
+  void WhatsLoginChangePasswordVisibility() {
     isPassword = !isPassword;
     suffix =
     isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;

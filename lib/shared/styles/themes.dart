@@ -9,17 +9,18 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: HexColor('333739'),
   appBarTheme: AppBarTheme(
     titleSpacing: 20.0,
-    systemOverlayStyle: SystemUiOverlayStyle(
+    systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
     ),
     backgroundColor: HexColor('333739'),
     elevation: 0.0,
-    titleTextStyle: TextStyle(
+    titleTextStyle: const TextStyle(
+      fontFamily: 'Roboto',
       color: Colors.white,
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white,
     ),
   ),
@@ -29,7 +30,7 @@ ThemeData darkTheme = ThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: defaultColor,
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontSize: 18.8,
       fontWeight: FontWeight.w600,
@@ -41,7 +42,7 @@ ThemeData lightTheme = ThemeData(
   fontFamily: 'Roboto',
   primarySwatch: defaultColor,
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     titleSpacing: 20.0,
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,
@@ -49,6 +50,7 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.white,
     elevation: 0.0,
     titleTextStyle: TextStyle(
+      fontFamily: 'Roboto',
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Colors.black,
@@ -57,11 +59,11 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black,
     ),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: defaultColor,
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontSize: 18.8,
       fontWeight: FontWeight.w600,
