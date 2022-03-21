@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whats/cubit/cubit.dart';
 import 'package:whats/cubit/states.dart';
+import 'package:whats/modules/add_new_post/add_new_post_screen.dart';
+import 'package:whats/modules/notifications/notifications_screen.dart';
+import 'package:whats/modules/search/search_screen.dart';
 import 'package:whats/shared/components/components.dart';
 
 class SocialLayout extends StatelessWidget {
@@ -15,13 +13,77 @@ class SocialLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WhatsCubit, WhatsStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is WhatsAddNewPostState) {
+          navigateTo(context, const AddNewPostScreen());
+        }
+      },
       builder: (context, state) {
+        var cubit = WhatsCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: const Text('News Feed'),
+            title: Text(
+              cubit.titles[cubit.currentIndex],
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.notifications_active_outlined),
+                onPressed: () {
+                  navigateTo(context, const NotificationsScreen());
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  navigateTo(context, const SearchScreen());
+                },
+              ),
+            ],
           ),
-          body: ConditionalBuilder(
+          body: cubit.bottomScreens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (index) {
+              cubit.changeBottomNav(index);
+            },
+            currentIndex: cubit.currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.message_outlined),
+                label: 'Chats',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.library_add_outlined),
+                label: 'New Post',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.supervised_user_circle_sharp),
+                label: 'Users',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings_applications_outlined),
+                label: 'Settings',
+              ),
+            ],
+          ),
+          drawer: const Drawer(
+            child: Center(
+              child: Text('DRAWER'),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Conditional Builder for Email verification
+
+/*
+ConditionalBuilder(
             condition: WhatsCubit.get(context).userModel != null,
             builder: (context) {
               var model = FirebaseAuth.instance.currentUser.emailVerified;
@@ -65,15 +127,10 @@ class SocialLayout extends StatelessWidget {
                         ),
                       ),
                     ),
-                  Text('welcome'),
                 ],
               );
             },
             fallback: (context) =>
                 const Center(child: CircularProgressIndicator()),
           ),
-        );
-      },
-    );
-  }
-}
+          */

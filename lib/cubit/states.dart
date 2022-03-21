@@ -10,3 +10,7 @@ class WhatsGetUserErrorState extends WhatsStates{
   final String error;
   WhatsGetUserErrorState(this.error);
 }
+
+class WhatsChangeBottomNavState extends WhatsStates{}
+
+class WhatsAddNewPostState extends WhatsStates{}
