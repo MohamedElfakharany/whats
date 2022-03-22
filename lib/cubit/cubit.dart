@@ -9,7 +9,6 @@ import 'package:whats/modules/chat/chats_screen.dart';
 import 'package:whats/modules/home/home_screen.dart';
 import 'package:whats/modules/settings/settings_screen.dart';
 import 'package:whats/modules/users/users_screen.dart';
-import 'package:whats/shared/components/components.dart';
 import 'package:whats/shared/network/local/constants.dart';
 
 class WhatsCubit extends Cubit<WhatsStates> {

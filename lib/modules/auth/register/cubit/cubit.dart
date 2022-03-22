@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats/cubit/cubit.dart';
-import 'package:whats/cubit/states.dart';
 import 'package:whats/models/user_model.dart';
 import 'package:whats/modules/auth/register/cubit/states.dart';
 
@@ -31,7 +29,6 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
         phone: phone,
         name: name,
       );
-
     } catch (error) {
       if (kDebugMode) {
         print(error.toString());
@@ -52,10 +49,13 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
       email: email,
       uId: uId,
       isEmailVerified: false,
+      bio: 'write your Bio ...',
+      imageCover: 'https://st.depositphotos.com/1006706/2671/i/600/depositphotos_26715369-stock-photo-which-way-to-choose-3d.jpg',
+      imageProfile: 'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGVuc3xlbnwwfHwwfHw%3D&w=1000&q=80',
     );
 
     try {
-      var response = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
           .doc(uId)
           .set(model.toMap());
@@ -72,7 +72,7 @@ class WhatsRegisterCubit extends Cubit<WhatsRegisterStates> {
   void changePasswordVisibility() {
     isPassword = !isPassword;
     suffix =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(WhatsRegisterchangePasswordVisibilityState());
   }
 }

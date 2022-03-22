@@ -94,7 +94,7 @@ Widget buildPostItem(context) => SizedBox(
                             ),
                             const Icon(
                               Icons.check_circle,
-                              color: Colors.blue,
+                              color: defaultColor,
                               size: 18,
                             ),
                           ],
@@ -174,7 +174,7 @@ Widget buildPostItem(context) => SizedBox(
               ),
               CachedNetworkImage(
                 imageUrl:
-                    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGVuc3xlbnwwfHwwfHw%3D&w=1000&q=80',
+                    'https://st.depositphotos.com/1006706/2671/i/600/depositphotos_26715369-stock-photo-which-way-to-choose-3d.jpg',
                 imageBuilder: (context, imageProvider) => Container(
                   height: 140.0,
                   width: double.infinity,
