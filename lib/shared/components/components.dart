@@ -3,19 +3,59 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whats/shared/styles/colors.dart';
 
 void navigateTo(context, Widget) => Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => Widget,
-  ),
-);
+      context,
+      MaterialPageRoute(
+        builder: (context) => Widget,
+      ),
+    );
 
 void navigateAndFinish(context, Widget) => Navigator.pushAndRemoveUntil(
-  context,
-  MaterialPageRoute(
-    builder: (context) => Widget,
-  ),
+      context,
+      MaterialPageRoute(
+        builder: (context) => Widget,
+      ),
       (Route<dynamic> route) => false,
-);
+    );
+Widget defaultFormField({
+  Function onSubmit,
+  Function onChange,
+  Function validate,
+  Function onPressedSofix,
+  Function onTapText,
+  IconData sofIcon,
+  bool security = false,
+  @required TextEditingController textController,
+  @required TextInputType textType,
+  @required IconData prefIcon,
+  @required String labelText,
+  @required String validatedText,
+}) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: TextFormField(
+      controller: textController,
+      keyboardType: textType,
+      onFieldSubmitted: onSubmit,
+      onChanged: onChange,
+      obscureText: security,
+      onTap: onTapText,
+      decoration: InputDecoration(
+        prefixIcon: Icon(prefIcon),
+        labelText: 'Enter Your $labelText',
+        border: const OutlineInputBorder(),
+        suffixIcon: IconButton(
+          icon: Icon(sofIcon),
+          onPressed: onPressedSofix,
+        ),
+      ),
+      validator: (value) {
+        if (value.isEmpty) {
+          return '$validatedText must not be Empty';
+        }
+      },
+    ),
+  );
+}
 
 Widget defaultButton({
   double width = double.infinity,
@@ -58,6 +98,7 @@ Widget defaultTextButton({
     child: Text(
       data.toUpperCase(),
       style: TextStyle(
+        fontSize: 17.5,
         color: color2,
       ),
     ),
@@ -97,17 +138,19 @@ Color chooseToastColor(ToastState state) {
 }
 
 Widget MyDivider() => Padding(
-  padding: const EdgeInsets.only(left: 20,top: 8,bottom: 8,right: 20),
-  child:   Container(
-    width: double.infinity,
-    height: 1.0,
-    color: Colors.grey,
-  ),
-);
+      padding: const EdgeInsets.only(left: 20, top: 8, bottom: 8, right: 20),
+      child: Container(
+        width: double.infinity,
+        height: 1.0,
+        color: Colors.grey,
+      ),
+    );
 
 class ScreenHolder extends StatelessWidget {
   final String msg;
+
   ScreenHolder(this.msg);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -153,3 +196,24 @@ class MySeparator extends StatelessWidget {
     );
   }
 }
+
+Widget defaultAppBar({
+  @required BuildContext context,
+  String title,
+  List<Widget> actions,
+}) =>
+    AppBar(
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          Icons.arrow_back_ios,
+        ),
+      ),
+      titleSpacing: 5.0,
+      title: Text(
+        title,
+      ),
+      actions: actions,
+    );

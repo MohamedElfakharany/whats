@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whats/cubit/cubit.dart';
 import 'package:whats/cubit/states.dart';
+import 'package:whats/modules/settings/edit_profile.dart';
+import 'package:whats/shared/components/components.dart';
 import 'package:whats/shared/styles/colors.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -172,7 +174,9 @@ class SettingsScreen extends StatelessWidget {
                         Icons.edit_outlined,
                         size: 25,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        navigateTo(context, EditProfileScreen());
+                      },
                     ),
                   ],
                 ),

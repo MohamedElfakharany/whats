@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:whats/cubit/states.dart';
 import 'package:whats/models/user_model.dart';
 import 'package:whats/modules/add_new_post/add_new_post_screen.dart';
@@ -21,11 +24,7 @@ class WhatsCubit extends Cubit<WhatsStates> {
     try {
       emit(WhatsGetUserLoadingState());
       var response =
-          await FirebaseFirestore
-              .instance
-              .collection('users')
-              .doc(uId)
-              .get();
+          await FirebaseFirestore.instance.collection('users').doc(uId).get();
       userModel = UserModel.fromJson(response.data());
       emit(WhatsGetUserSuccessState());
     } catch (error) {
@@ -44,7 +43,7 @@ class WhatsCubit extends Cubit<WhatsStates> {
     const UsersScreen(),
     const SettingsScreen()
   ];
-  List<String>titles = [
+  List<String> titles = [
     'News Feed',
     'Chats Screen',
     'AddNewPost Screen',
@@ -52,13 +51,35 @@ class WhatsCubit extends Cubit<WhatsStates> {
     'Settings Screen',
   ];
 
-  void changeBottomNav(int index){
-    if (index == 2){
+  void changeBottomNav(int index) {
+    if (index == 2) {
       emit(WhatsAddNewPostState());
-    }else{
+    } else {
       currentIndex = index;
       emit(WhatsChangeBottomNavState());
     }
   }
 
+  File profileImage;
+  var picker = ImagePicker();
+
+  Future getProfileImage() async {
+    try {
+      XFile pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedImage != null) {
+        profileImage = File(pickedImage.path);
+        emit(WhatsProfileImagePickedSuccessState());
+      } else {
+        if (kDebugMode) {
+          print('no image selected');
+        }
+        emit(WhatsProfileImagePickedErrorState());
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
 }

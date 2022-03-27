@@ -14,3 +14,11 @@ class WhatsGetUserErrorState extends WhatsStates{
 class WhatsChangeBottomNavState extends WhatsStates{}
 
 class WhatsAddNewPostState extends WhatsStates{}
+
+class WhatsProfileImagePickedSuccessState extends WhatsStates{}
+
+class WhatsProfileImagePickedErrorState extends WhatsStates{}
+
+class WhatsCoverImagePickedSuccessState extends WhatsStates {}
+
+class WhatsCoverImagePickedErrorState extends WhatsStates {}
